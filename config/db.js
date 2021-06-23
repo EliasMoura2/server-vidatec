@@ -6,7 +6,7 @@ const db = mongoose.connect(DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(() => console.log(`DB CONNECTED`))
+  .then((db) => console.log(`DB CONNECTED to ${db.connection.host}`))
   .catch(err => console.error(err))
 
 module.exports = db;

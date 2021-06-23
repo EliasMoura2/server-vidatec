@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Movie = require('./../models/movie');
-const multer = require('multer');
-const storage = require('./../middlewares/uploadFiles');
+const uploadFile = require('./../middlewares/uploadFiles');
 
 router.get(
   '/movies',
@@ -31,13 +30,14 @@ router.get(
 
 router.post(
   '/movies',
-  multer({storage}).single('movies'),
+  uploadFile,
   async (req, res) => {
     try{
-      const {title, description} = req.body;
-      const newMovie = new Book({title, description}); 
-      const movie = await newMovie.save();
-      res.status(201).json(movie);
+      console.log(req.files)
+      // const {title, description} = req.body;
+      // const newMovie = new Book({title, description}); 
+      // const movie = await newMovie.save();
+      // res.status(201).json(movie);
     } catch(error) {
       console.log(error.message)
       res.status(500).json({error: 'Server internal error'})

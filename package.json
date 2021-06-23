@@ -1,19 +1,21 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "repository": "https://github.com/EliasMoura2/server-vidatec.git",
   "author": "Elias Moura",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js"
+    "start": "cross-env NODE_ENV=production node src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "fast-csv": "^4.3.6",
+    "fs-extra": "^10.0.0",
     "helmet": "^4.6.0",
     "mongoose": "^5.12.14",
     "morgan": "^1.10.0",

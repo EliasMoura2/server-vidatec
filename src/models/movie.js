@@ -5,9 +5,19 @@ const MovieSchema = new Schema({
     type: String,
     required: true
   },
-  description: {
+  genre: {
     type: String,
     required: true
+  },
+  year: {
+    type: Number
+  },
+  director: {
+    type: String
+  },
+  actors: {
+    // type: [String]
+    type: String
   },
   created_at: { 
     type: Date,
