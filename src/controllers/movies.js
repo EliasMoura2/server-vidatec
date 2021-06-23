@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const Movie = require('./../models/movie');
+const multer = require('multer');
+const storage = require('./../middlewares/uploadFiles');
 
 router.get(
   '/movies',
+
   async (req, res) => {
     try{
       const movies = await Movie.find()
@@ -28,6 +31,7 @@ router.get(
 
 router.post(
   '/movies',
+  multer({storage}).single('movies'),
   async (req, res) => {
     try{
       const {title, description} = req.body;
