@@ -1,7 +1,7 @@
 const Movie = require('./../models/movie');
 
 const list = async () => {
-  const result = await Movie.find({}, {
+  const movies = await Movie.find({}, {
     "_id": 1,
     "titulo": 1,
     "genero": 1,
@@ -9,7 +9,7 @@ const list = async () => {
     "director": 1,
     "actores": 1
   });
-  return result;
+  return movies;
 };
 
 const getOne = async (id) => {
@@ -25,13 +25,13 @@ const getOne = async (id) => {
 };
 
 const create = async (movie) => {
-  let result = await Movie.create(movie)
-  return result;
+  let movie = await Movie.create(movie)
+  return movie;
 };
 
 const remove = async (id) => {
-  let result = await Movie.findByIdAndDelete({_id: id});
-  return result;
+  let movie = await Movie.findByIdAndDelete({_id: id});
+  return movie;
 }
 
 module.exports = {
