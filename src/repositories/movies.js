@@ -3,7 +3,10 @@ const { getPaginationParams } = require('./../utils/pagination');
 
 const getAll = async (paginationInfo) => {
   const paginationData = getPaginationParams(paginationInfo);
-  const movies = await Movie.find({}, {
+  console.log(paginationInfo)
+  console.log(paginationData)
+  console.log(`'${paginationInfo.titulo}'`)
+  const movies = await Movie.find({titulo: {$regex: 'A'}}, {
     "_id": 1,
     "titulo": 1,
     "genero": 1,

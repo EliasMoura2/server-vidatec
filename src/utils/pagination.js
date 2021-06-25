@@ -15,7 +15,8 @@ const getPaginationInfo = parameters => {
   const paginationInfo = {
     page: parseInt(parameters.page) || 1,
     limit: parseInt(parameters.pageSize) || 10,
-    order
+    order,
+    titulo: parameters.titulo || ''
   };
   return paginationInfo;
 };
@@ -37,9 +38,13 @@ const getOffSet = (page, limit) => {
 };
 
 const getPaginationResult = (paginationInfo, route, count) => {
-  const {page, limit } = paginationInfo;
+  const {page, limit, titulo } = paginationInfo;
   let results = {};
-  results.current = `${route}?page=${page}&pageSize=${limit}`;
+  if(limit.length > 0){
+    results.current = `${route}?page=${page}&pageSize=${limit}&titulo=${titulo}`;
+  } else {
+    results.current = `${route}?page=${page}&pageSize=${limit}`;
+  }
   results.prev = getPreviousPage(page, limit, route);
   results.next = getNextPage(page, limit, route, count);
   return results;
@@ -49,13 +54,24 @@ const getPreviousPage = (page, limit, route) => {
   if (page <= 1) {
     return null;
   }
-  return `${route}?page=${page - 1}&pageSize=${limit}`;
+  let prevPage = {}
+  if(limit.length > 0){
+    prevPage = `${route}?page=${page}&pageSize=${limit}&titulo=${titulo}`;
+  } else {
+    prevPage = `${route}?page=${page}&pageSize=${limit}`;
+  }
+  return prevPage;
 };
 
 const getNextPage = (page, limit, route, count) => {
   let rest = count - page * limit;
   if (rest > 0) {
-    let nextPage = `${route}?page=${page + 1}&pageSize=${limit}`;
+    let nextPage = {}
+    if(limit.length > 0){
+      nextPage = `${route}?page=${page}&pageSize=${limit}&titulo=${titulo}`;
+    } else {
+      nextPage = `${route}?page=${page}&pageSize=${limit}`;
+    }
     return nextPage;
   } else {
     return null;
