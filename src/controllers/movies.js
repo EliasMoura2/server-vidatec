@@ -4,14 +4,20 @@ const path = require('path');
 const fs = require('fs');
 const { unlink } = require('fs-extra');
 const csv = require('csv-parser');
-const repository = require('./../repositories/movies');
+const handler = require('./../handlers/movies');
+// const {getPaginationInfo, getPaginationResult} = require('../utils/pagination');
 
 router.get(
   '/movies',
   async (req, res) => {
     try{
-      let movies = await repository.list();
-      res.status(200).json(movies)
+      // const paginationInfo = getPaginationInfo(req.query);
+      // const results = await handler.getMovies(paginationInfo);
+      // const route = '/api/movies/';
+      // const paginationResult = await getPaginationResult(paginationInfo, routem results);
+      // res.status(200).json(paginationResult);
+      let movies = await handler.getMovies();
+      res.status(200).json(movies);
     } catch(error) {
       console.log(error.message)
       res.status(500).json({error: 'Server internal error'})
@@ -24,7 +30,10 @@ router.get(
   async (req, res) => {
     try{
       const { id } = req.params;
-      let movie = await repository.getOne(id);
+      let movie = await handler.getOneMovie(id);
+      if(!movie){
+        return res.status(404).json({msg: 'Movie not found!'})
+      }
       res.status(200).json(movie);
     } catch(error) {
       console.log(error.message)
@@ -43,6 +52,7 @@ router.post(
       }
       let movies = [];
       let { filename } = req.file;
+      console.log('here')
 
       const pathMovies = path.join(__dirname, `../public/uploads/${filename}`);
     
@@ -52,7 +62,7 @@ router.post(
         .on("data", (row) => { movies.push(row)})
         .on("end", async () => {
           try {
-            await repository.create(movies)
+            await handler.createMovie(movies)
             res.status(200).json({
               message: "Uploaded the file successfully",
             });
@@ -89,7 +99,7 @@ router.delete(
   async (req, res) => {
     try{
       const { id } = req.params;
-      let movieDeleted = await repository.remove(id);
+      let movieDeleted = await handler.deleteMovie(id);
       if(!movieDeleted){
         res.status(404).json({msg: `Movie not found!`});
       }
