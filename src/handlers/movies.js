@@ -7,14 +7,15 @@ const getMovies = async (parameters) => {
   let numOfMovies = await repository.totalMovies();
   let movies = await repository.getAll(paginationInfo);
   let result = await getPaginationResult(paginationInfo, route, numOfMovies);
-
-  movies.push({
-    totalPages: Math.ceil(numOfMovies / paginationInfo.limit),
-    totalItems: numOfMovies,
-    currentPage: result.current,
-    prevPage: result.prev,
-    nextPage: result.next
-  });
+  if(movies.length > 0){
+    movies.push({
+      totalPages: Math.ceil(numOfMovies / paginationInfo.limit),
+      totalItems: numOfMovies,
+      currentPage: result.current,
+      prevPage: result.prev,
+      nextPage: result.next
+    });
+  }
   return movies;
 }
 
