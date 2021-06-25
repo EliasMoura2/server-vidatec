@@ -10,13 +10,7 @@ router.get(
   '/movies',
   async (req, res) => {
     try{
-
-      // const paginationInfo = getPaginationInfo(req.query);
-      // const results = await handler.getMovies(paginationInfo);
-      const route = '/api/movies/';
-      // const paginationResult = await getPaginationResult(paginationInfo, routem results);
-      // res.status(200).json(paginationResult);
-      let movies = await handler.getMovies(req.query, route);
+      let movies = await handler.getMovies(req.query);
       res.status(200).json(movies);
     } catch(error) {
       console.log(error.message)

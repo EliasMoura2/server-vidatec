@@ -1,16 +1,11 @@
 const Movie = require('./../models/movie');
 const { getPaginationParams } = require('./../utils/pagination');
 
-const getAll = async (titulo) => {
-  // const paginationData = getPaginationParams(paginationInfo, 'created_at');
-  // const result = await Category.findAndCountAll({
-  //   ...paginationData,
-  //   attributes: ['name'],
-  // });
-  // return result;
+const getAll = async (paginationInfo) => {
 
-  // db.movies.find({titulo: {$regex: 'Toy'}}).pretty()
-
+  const paginationData = getPaginationParams(paginationInfo);
+  console.log(paginationInfo)
+  console.log(paginationData)
   const movies = await Movie.find({}, {
     "_id": 1,
     "titulo": 1,
@@ -18,9 +13,14 @@ const getAll = async (titulo) => {
     "año": 1,
     "director": 1,
     "actores": 1
-  }).limit('');
+  })
+  .skip(paginationData.skip)
+  .limit(paginationInfo.limit)
+  .sort({titulo: `${paginationInfo.order}`});
   return movies;
 };
+
+const totalMovies = async () => await Movie.countDocuments({});
 
 const getOne = async (id) => {
   let movie = await Movie.findOne({_id: id}, { 
@@ -49,4 +49,5 @@ module.exports = {
   getOne,
   create,
   remove,
+  totalMovies,
 }
