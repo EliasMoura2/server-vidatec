@@ -1,21 +1,20 @@
 const { Schema, model } = require('mongoose');
 
 const MovieSchema = new Schema({
-  title: { 
+  titulo: { 
     type: String,
-    required: true
+    unique: true
   },
-  genre: {
+  genero: {
     type: String,
-    required: true
   },
-  year: {
+  año: {
     type: Number
   },
   director: {
     type: String
   },
-  actors: {
+  actores: {
     // type: [String]
     type: String
   },

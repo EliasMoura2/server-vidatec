@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 const uploadFile = multer({
   storage,
   fileFilter
-}).array("file");
+}).single("file");
 
 /*
 const upload = multer({
