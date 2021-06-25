@@ -46,7 +46,6 @@ router.post(
       }
       let movies = [];
       let { filename } = req.file;
-      console.log('here')
 
       const pathMovies = path.join(__dirname, `../public/uploads/${filename}`);
     
