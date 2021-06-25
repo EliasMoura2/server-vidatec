@@ -15,7 +15,7 @@ app.use(helmet());
 app.use('/api', require('./controllers/movies'));
 
 app.get('*', (req, res) => {
-  res.status(404).json({msg: 'Page not found'})
+  res.status(404).json({msg: 'Page not found'});
 });
 
 module.exports = app;

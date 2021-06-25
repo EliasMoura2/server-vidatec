@@ -23,7 +23,9 @@ router.get(
   '/movies/:id',
   async (req, res) => {
     try{
-      res.status(200).json({msg: 'GET /movies/:id'});
+      const { id } = req.params;
+      let movie = await repository.getOne(id);
+      res.status(200).json(movie);
     } catch(error) {
       console.log(error.message)
       res.status(500).json({error: 'Server internal error'})
@@ -91,7 +93,7 @@ router.delete(
       if(!movieDeleted){
         res.status(404).json({msg: `Movie not found!`});
       }
-      res.status(200).json(`Movie deleted successfully`);
+      res.status(200).json({msg: `Movie deleted successfully`});
     } catch(error) {
       console.error(error.message);
       res.status(500).json({error: 'Server internal error'});
