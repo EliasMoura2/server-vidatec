@@ -5,18 +5,18 @@ const fs = require('fs');
 const { unlink } = require('fs-extra');
 const csv = require('csv-parser');
 const handler = require('./../handlers/movies');
-// const {getPaginationInfo, getPaginationResult} = require('../utils/pagination');
 
 router.get(
   '/movies',
   async (req, res) => {
     try{
+
       // const paginationInfo = getPaginationInfo(req.query);
       // const results = await handler.getMovies(paginationInfo);
-      // const route = '/api/movies/';
+      const route = '/api/movies/';
       // const paginationResult = await getPaginationResult(paginationInfo, routem results);
       // res.status(200).json(paginationResult);
-      let movies = await handler.getMovies();
+      let movies = await handler.getMovies(req.query, route);
       res.status(200).json(movies);
     } catch(error) {
       console.log(error.message)
