@@ -2,10 +2,7 @@ const Movie = require('./../models/movie');
 const { getPaginationParams } = require('./../utils/pagination');
 
 const getAll = async (paginationInfo) => {
-
   const paginationData = getPaginationParams(paginationInfo);
-  console.log(paginationInfo)
-  console.log(paginationData)
   const movies = await Movie.find({}, {
     "_id": 1,
     "titulo": 1,
@@ -16,7 +13,7 @@ const getAll = async (paginationInfo) => {
   })
   .skip(paginationData.skip)
   .limit(paginationInfo.limit)
-  .sort({titulo: `${paginationInfo.order}`});
+  .sort({titulo: 1})
   return movies;
 };
 
@@ -39,6 +36,11 @@ const create = async (movie) => {
   return result;
 };
 
+const update = async (id, data) => {
+  let movie = await Movie.findByIdAndUpdate(id, data);
+  return movie;
+};
+
 const remove = async (id) => {
   let movie = await Movie.findByIdAndDelete({_id: id});
   return movie;
@@ -46,8 +48,9 @@ const remove = async (id) => {
 
 module.exports = {
   getAll,
+  totalMovies,
   getOne,
   create,
+  update,
   remove,
-  totalMovies,
 }

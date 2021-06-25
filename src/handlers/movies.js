@@ -29,10 +29,10 @@ const createMovie = async movie => {
   return movies;
 };
 
-// const updateMovie = async (id, editedCategory) => {
-//   const movie = await repository.update(id, editedCategory);
-//   return movie;
-// };
+const updateMovie = async (id, updateValues) => {
+  let movie = await repository.update(id, updateValues);
+  return movie;
+};
 
 const deleteMovie = async (id) => {
   const movie = await repository.remove(id);
@@ -43,6 +43,6 @@ module.exports = {
   getMovies,
   getOneMovie,
   createMovie,
-  // updateMovie,
+  updateMovie,
   deleteMovie,
 }

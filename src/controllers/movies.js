@@ -79,10 +79,17 @@ router.put(
   '/movies/:id',
   async (req, res) => {
     try{
-      res.status(200).json({msg: 'PUT /movies/:id'})
+      const { id } = req.params;
+      const valuesToUpdate = req.body;
+      let movieUpdated = await handler.updateMovie(id, valuesToUpdate);
+      if(!movieUpdated){
+        res.status(404).json({msg: `Movie not found!`});
+        return;
+      }
+      res.status(200).json({msg: `Movie updated successfully`});
     } catch(error) {
-      console.log(error.message)
-      res.status(500).json({error: 'Server internal error'})
+      console.error(error.message);
+      res.status(500).json({error: 'Server internal error'});
     }
   }
 );
@@ -95,6 +102,7 @@ router.delete(
       let movieDeleted = await handler.deleteMovie(id);
       if(!movieDeleted){
         res.status(404).json({msg: `Movie not found!`});
+        return;
       }
       res.status(200).json({msg: `Movie deleted successfully`});
     } catch(error) {
