@@ -45,6 +45,11 @@ const remove = async (id) => {
   return movie;
 }
 
+const getByTitle = async (title) => {
+  let movie = await Movie.findOne({titulo: title});
+  return movie;
+}
+
 module.exports = {
   getAll,
   totalMovies,
@@ -52,4 +57,5 @@ module.exports = {
   create,
   update,
   remove,
+  getByTitle,
 }

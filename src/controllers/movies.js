@@ -5,6 +5,7 @@ const fs = require('fs');
 const { unlink } = require('fs-extra');
 const csv = require('csv-parser');
 const handler = require('./../handlers/movies');
+const { putValidationRules, validate } = require('./../middlewares/validationsMovies'); 
 
 router.get(
   '/movies',
@@ -77,6 +78,8 @@ router.post(
 
 router.put(
   '/movies/:id',
+  putValidationRules(),
+  validate,
   async (req, res) => {
     try{
       const { id } = req.params;
