@@ -4,7 +4,8 @@ const {getPaginationInfo, getPaginationResult} = require('./../utils/pagination'
 const getMovies = async (parameters) => {
   const route = '/api/movies';
   let paginationInfo = getPaginationInfo(parameters);
-  let numOfMovies = await repository.totalMovies();
+  let numOfMovies = await repository.totalMovies(paginationInfo.titulo);
+  console.log(numOfMovies)
   let movies = await repository.getAll(paginationInfo);
   let result = await getPaginationResult(paginationInfo, route, numOfMovies);
   if(movies.length > 0){

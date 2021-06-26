@@ -3,10 +3,7 @@ const { getPaginationParams } = require('./../utils/pagination');
 
 const getAll = async (paginationInfo) => {
   const paginationData = getPaginationParams(paginationInfo);
-  console.log(paginationInfo)
-  console.log(paginationData)
-  console.log(`'${paginationInfo.titulo}'`)
-  const movies = await Movie.find({titulo: {$regex: 'A'}}, {
+  const movies = await Movie.find({titulo: {$regex: `${paginationInfo.titulo}`}}, {
     "_id": 1,
     "titulo": 1,
     "genero": 1,
@@ -20,7 +17,11 @@ const getAll = async (paginationInfo) => {
   return movies;
 };
 
-const totalMovies = async () => await Movie.countDocuments({});
+const totalMovies = async (titulo) => {
+  let movies = await Movie.countDocuments().where({titulo: { $regex: `${titulo}`}})
+  console.log('cant', movies);
+  return movies;
+}
 
 const getOne = async (id) => {
   let movie = await Movie.findOne({_id: id}, { 
