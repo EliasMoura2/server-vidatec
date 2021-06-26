@@ -1,12 +1,10 @@
 const repository = require('./../repositories/movies');
-// const {getPaginationInfo, getPaginationResult} = require('./../utils/pagination');
 
-const getMovies = async (parameters, route) => {
-  // let { titulo, page, pageSize } = parameters;
-  // console.log(titulo);
-  // let paginationInfo = getPaginationInfo(parameters);
-  // console.log(paginationInfo);
-  let movies = await repository.getAll();
+const getMovies = async (data) => {
+  const pageSize = parseInt(data.pageSize, 10) || 10;
+  const page = parseInt(data.page, 10) || 1;
+  const titulo = data.titulo || "";
+  let movies = await repository.getAll(pageSize, page, titulo);
   return movies;
 }
 
