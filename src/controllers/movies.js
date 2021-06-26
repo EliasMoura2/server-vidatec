@@ -83,8 +83,7 @@ router.put(
   async (req, res) => {
     try{
       const { id } = req.params;
-      const valuesToUpdate = req.body;
-      let movieUpdated = await handler.updateMovie(id, valuesToUpdate);
+      let movieUpdated = await handler.updateMovie(id, req.body);
       if(!movieUpdated){
         res.status(404).json({msg: `Movie not found!`});
         return;
