@@ -1,7 +1,6 @@
 const Movie = require('./../models/movie');
 
 const getAll = async (pageSize, page, titulo) => {
-  console.log(pageSize, page, titulo)
   const movies = await Movie.paginate(
     {
       titulo: {$regex: `${titulo}`}
